@@ -1,0 +1,37 @@
+# ======================
+ # Terraform
+ # ======================
+ .terraform/
+ *.tfstate
+ *.tfstate.*
+ crash.log
+ terraform.tfvars
+ 
+ # ======================
+ # AWS / Secrets
+ # ======================
+ .env
+ *.env
+ .aws/
+ aws_credentials.txt
+ 
+ # ======================
+ # Docker
+ # ======================
+ *.log
+ 
+ # ======================
+ # Python
+ # ======================
+ __pycache__/
+ *.pyc
+ *.pyo
+ *.pyd
+ .env/
+ 
+ # ======================
+ # OS / Editor
+ # ======================
+ .DS_Store
+ .idea/
+ .vscode/
