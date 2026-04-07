@@ -1,3 +1,4 @@
+# this .gitignore file is for excluding any sensitive data in the repo to prevent any private data leaks
 # ======================
  # Terraform
  # ======================
