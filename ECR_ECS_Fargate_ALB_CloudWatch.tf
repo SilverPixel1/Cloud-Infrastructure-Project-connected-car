@@ -268,6 +268,20 @@ resource "aws_ecs_task_definition" "ingest_api_task" {                #Task Defi
       name      = "ingest-api-container"
       image     = "${aws_ecr_repository.ingest_api.repository_url}:latest"
       essential = true
+
+
+      environment = [
+        {
+          name = "AWS_REGION"
+          value = var.aws_region
+        },
+        {
+          name = "SQS_QUEUE_URL"
+          value = aws_sqs_queue.sensor_queue.id
+        }
+      ]
+
+
       portMappings = [
         {
           containerPort = 8080
@@ -275,6 +289,8 @@ resource "aws_ecs_task_definition" "ingest_api_task" {                #Task Defi
           protocol      = "tcp"
         }
       ]
+
+
       logConfiguration = {
         logDriver = "awslogs"
         options   = {
@@ -309,6 +325,23 @@ resource "aws_ecs_task_definition" "processor_task" {
       name      = "processor-container"
       image     = "${aws_ecr_repository.processor.repository_url}:latest"
       essential = true
+
+      environment = [
+        {
+          name = "AWS_REGION"
+          value = var.aws_region
+        },
+        {
+          name = "SQS_QUEUE_URL"
+          value = aws_sqs_queue.sensor_queue.id
+        },
+        {
+          name = "DYNAMODB_TABLE_NAME"
+          value = aws_dynamodb_table.road_conditions.name
+        }
+      ]
+
+
       logConfiguration = {
         logDriver = "awslogs"
         options   = {
@@ -342,6 +375,16 @@ resource "aws_ecs_task_definition" "simulation_task" {
       name      = "simulation-container"
       image     = "${aws_ecr_repository.simulator.repository_url}:latest"
       essential = true
+
+
+      environment = [ #für die simulator die URL welcher in AWS erstellt wurde um die Docker Container zu erreichen.
+
+        {
+          name  = "INGEST_URL"
+          value = "http://${aws_lb.application_load_balancer.dns_name}:80"
+        }
+      ]
+
       logConfiguration = {
         logDriver = "awslogs"
         options   = {
