@@ -172,8 +172,8 @@ resource "aws_security_group" "ecs_service" {
   vpc_id      = aws_vpc.connected_car_vpc.id
 
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     security_groups = [aws_security_group.alb_security_group.id]
   }
@@ -262,6 +262,7 @@ resource "aws_ecs_task_definition" "ingest_api_task" {                #Task Defi
   cpu                      = "256"
   memory                   = "512"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task_role.arn
 
   container_definitions = jsonencode([
     {
@@ -277,7 +278,7 @@ resource "aws_ecs_task_definition" "ingest_api_task" {                #Task Defi
         },
         {
           name = "SQS_QUEUE_URL"
-          value = aws_sqs_queue.sensor_queue.id
+          value = aws_sqs_queue.sensor_queue.url
         }
       ]
 
@@ -305,7 +306,7 @@ resource "aws_ecs_task_definition" "ingest_api_task" {                #Task Defi
 
   tags = {
     Environment = "Development"
-    Project = "var.project_name"
+    Project = var.project_name
   }
 
 }
@@ -381,7 +382,7 @@ resource "aws_ecs_task_definition" "simulation_task" {
 
         {
           name  = "INGEST_URL"
-          value = "http://${aws_lb.application_load_balancer.dns_name}:80"
+          value = "http://${aws_lb.application_load_balancer.dns_name}/ingest"
         }
       ]
 
@@ -440,8 +441,9 @@ resource "aws_ecs_service" "processor_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = aws_subnet.connected_car_public_subnet[*].id
+    subnets         = aws_subnet.connected_car_private_subnet[*].id
     security_groups = [aws_security_group.ecs_service.id]
+    assign_public_ip = false
   }
   
 }
@@ -455,8 +457,9 @@ resource "aws_ecs_service" "simulation_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = aws_subnet.connected_car_public_subnet[*].id
+    subnets         = aws_subnet.connected_car_private_subnet[*].id
     security_groups = [aws_security_group.ecs_service.id]
+    assign_public_ip = false 
   }
 }
 
