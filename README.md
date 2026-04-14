@@ -65,4 +65,4 @@
 
 Dieses Diagramm zeigt den End-to-End Datenfluss und die Infrastruktur:
 
-![Architektur Diagramm](architecture.png)
+![Architektur Diagramm](Docs/architecture.png)
