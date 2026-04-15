@@ -25,21 +25,21 @@ jobs:
 
       - name: Build & Push ingest-api Image
         run: |
-          cd app/ingest-api
+          cd App/ingest-api
           docker buildx build --platform linux/amd64 -t ingest-api:latest .
           docker tag ingest-api:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/connected-car-ingest-api:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/connected-car-ingest-api:latest
 
       - name: Build & Push processor Image
         run: |
-          cd app/processor
+          cd App/processor
           docker buildx build --platform linux/amd64 -t processor:latest .
           docker tag processor:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/connected-car-processor:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/connected-car-processor:latest
 
       - name: Build & Push simulator Image
         run: |
-          cd app/simulator
+          cd App/simulator
           docker buildx build --platform linux/amd64 -t simulator:latest .
           docker tag simulator:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/connected-car-simulator:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/connected-car-simulator:latest
