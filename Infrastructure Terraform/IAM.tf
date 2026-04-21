@@ -23,7 +23,7 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   tags = {
     Name        = "${var.project_name}-ecs-task-execution-role"
     Environment = "Development"
-    Project     = "var.project_name"
+    Project     = var.project_name
     ManagedBy   = "Terraform"
   }
 }

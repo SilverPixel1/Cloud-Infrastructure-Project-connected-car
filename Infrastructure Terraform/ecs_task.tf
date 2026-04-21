@@ -106,7 +106,7 @@ resource "aws_ecs_task_definition" "processor_task" {
 
   tags = {
     Environment = "Development"
-    Project = "var.project_name"
+    Project = var.project_name
   }
 
 }
