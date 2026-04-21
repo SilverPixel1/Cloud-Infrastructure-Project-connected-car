@@ -1,7 +1,7 @@
 # läuft auf port 8080
 # für ECS Fargate erstellt
 
-From python:3.10-slim
+FROM python:3.10-slim
 
 WORKDIR /app
 

@@ -20,7 +20,7 @@ resource "aws_ecs_cluster" "connected_car_cluster" {
 
 
 ##########################################
-#ECS Task Definition für Ingest API, Processor und Simulation, damit die Container in ECS gestartet werden können
+#ECS Task Definition für Ingest API, Processor und Simulator, damit die Container in ECS gestartet werden können
 ##########################################
 
 # security group ECS Service
@@ -96,11 +96,11 @@ resource "aws_ecs_service" "processor_service" {
   
 }
 
-#simulation service erstellt, damit die Simulation Container in ECS gestartet und verwaltet werden können
-resource "aws_ecs_service" "simulation_service" {
-  name            = "${var.project_name}-simulation-service"
+#simulator service erstellt, damit die Simulator Container in ECS gestartet und verwaltet werden können
+resource "aws_ecs_service" "simulator_service" {
+  name            = "${var.project_name}-simulator-service"
   cluster         = aws_ecs_cluster.connected_car_cluster.id
-  task_definition = aws_ecs_task_definition.simulation_task.arn
+  task_definition = aws_ecs_task_definition.simulator_task.arn
   desired_count   = 1
   launch_type     = "FARGATE"
 

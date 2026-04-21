@@ -111,9 +111,9 @@ resource "aws_ecs_task_definition" "processor_task" {
 }
 
 
-#simulation task definition
-resource "aws_ecs_task_definition" "simulation_task" {
-  family                   = "${var.project_name}-simulation"
+#simulator task definition
+resource "aws_ecs_task_definition" "simulator_task" {
+  family                   = "${var.project_name}-simulator"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -122,7 +122,7 @@ resource "aws_ecs_task_definition" "simulation_task" {
 
   container_definitions = jsonencode([
     {
-      name      = "simulation-container"
+      name      = "simulator-container"
       image     = "${aws_ecr_repository.simulator.repository_url}:latest"
       essential = true
 
@@ -140,7 +140,7 @@ resource "aws_ecs_task_definition" "simulation_task" {
         options   = {
           "awslogs-group"         = aws_cloudwatch_log_group.ecs_tasks_log_group.name
           "awslogs-region"        = var.aws_region
-          "awslogs-stream-prefix" = "simulation"
+          "awslogs-stream-prefix" = "simulator"
         }
       }
     }
