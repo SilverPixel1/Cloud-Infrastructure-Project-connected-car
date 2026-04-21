@@ -77,7 +77,7 @@ jobs:
           set -euxo pipefail
           aws ecs update-service \
             --cluster connected-car-cluster \
-            --service connected-car-ingest-api \
+            --service connected-car-ingest-api-service \
             --force-new-deployment
 
       - name: Force new ECS Deployment (processor)
@@ -85,7 +85,7 @@ jobs:
           set -euxo pipefail
           aws ecs update-service \
             --cluster connected-car-cluster \
-            --service connected-car-processor \
+            --service connected-car-processor-service \
             --force-new-deployment
 
       - name: Force new ECS Deployment (simulator)
@@ -93,7 +93,7 @@ jobs:
           set -euxo pipefail
           aws ecs update-service \
             --cluster connected-car-cluster \
-            --service connected-car-simulator \
+            --service connected-car-simulator-service \
             --force-new-deployment
 
 

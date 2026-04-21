@@ -82,7 +82,10 @@ resource "aws_iam_role_policy" "ecs_task_sqs_policy" {
             "sqs:SendMessage",
             "sqs:ReceiveMessage",
             "sqs:GetQueueAttributes",
-            "sqs:GetQueueUrl"
+            "sqs:GetQueueUrl",
+            "sqs:DeleteMessage"
+          
+            
             ]
             Resource = aws_sqs_queue.sensor_queue.arn
         }

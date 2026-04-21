@@ -23,7 +23,7 @@ resource "aws_dynamodb_table" "road_conditions" {
 
   attribute {
     name = "timestamp"
-    type = "N"
+    type = "S"
   }
 
   tags = {
