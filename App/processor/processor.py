@@ -28,11 +28,11 @@ def process_event(data):
         }
     )
 
-    print("✅ Saved event to DynamoDB:", region_key)
+    print("Saved event to DynamoDB:", region_key)
 
 
 def main_loop():
-    print("🔄 Processor SQS loop started...")
+    print("Processor SQS loop started...")
 
     while True:
         response = sqs.receive_message(
