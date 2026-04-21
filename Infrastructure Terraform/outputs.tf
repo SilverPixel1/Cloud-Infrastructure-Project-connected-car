@@ -1,3 +1,19 @@
+###################
+#Output VPC and subnet IDs
+###################
+output "vpc_id" {
+  value = aws_vpc.connected_car_vpc.id
+}
+
+output "public_subnet_ids" {
+  value = aws_subnet.connected_car_public_subnet[*].id
+}
+
+output "private_subnet_ids" {
+  value = aws_subnet.connected_car_private_subnet[*].id
+}   
+
+
 #################
 #output ECR Repository URLs
 #################
@@ -12,8 +28,6 @@ output "processor_ecr_url" {
 output "simulator_ecr_url" {
   value = aws_ecr_repository.simulator.repository_url
 }
-
-
 
 
 #############
